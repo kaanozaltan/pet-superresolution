@@ -35,13 +35,14 @@ class VDSR(nn.Module):
         )
 
     def forward(self, x):
-        residual = self.conv_in(x)
-        x_in = residual
+        # x_in = x
+        x = self.conv_in(x)
 
         for block in self.convs:
-            residual = block(residual)
+            x = block(x)
 
-        x = self.conv_out(residual + x_in)
+        # x = self.conv_out(residual + x_in)
+        x = self.conv_out(x)
         return x
     
     def get_name(self):
@@ -78,7 +79,7 @@ class EDSR(nn.Module):
             residual = block(residual)
             x = x + residual
 
-        # x = self.conv_out(x)
+        # x = self.conv_hidden(x)
         # x = x + x_in
         x = self.conv_out(x + x_in)
         return x

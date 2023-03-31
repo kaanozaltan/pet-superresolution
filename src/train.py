@@ -18,6 +18,10 @@ def train(model, device, train_loader, criterion, optimizer, num_epochs):
         running_loss = 0.0
         for inputs, targets in train_loader:
             inputs, targets = inputs.to(device), targets.to(device)
+
+            if model_name == 'vdsr':
+                targets = targets - inputs
+
             optimizer.zero_grad()
             outputs = model(inputs)
             loss = criterion(outputs, targets)
@@ -38,14 +42,14 @@ print("Device:", device)
 train_dataset = SRDataset('dataset/train/lr', 'dataset/train/hr', transform=transforms.ToTensor())
 train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
 
-# model, criterion = SRCNN(), nn.MSELoss()
+model, criterion = SRCNN(), nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=1e-3)
+train(model, device, train_loader, criterion, optimizer, num_epochs=100)
+
+# model, criterion = VDSR(), nn.MSELoss()
 # optimizer = optim.Adam(model.parameters(), lr=1e-3)
 # train(model, device, train_loader, criterion, optimizer, num_epochs=100)
 
-# model, criterion = VDSR(), nn.L1Loss()
-# optimizer = optim.Adam(model.parameters(), lr=1e-3)
-# train(model, device, train_loader, criterion, optimizer, num_epochs=50)
-
-model, criterion = EDSR(), nn.L1Loss()
-optimizer = optim.Adam(model.parameters(), lr=1e-4)
-train(model, device, train_loader, criterion, optimizer, num_epochs=25)
+# model, criterion = EDSR(), nn.L1Loss()
+# optimizer = optim.Adam(model.parameters(), lr=1e-4)
+# train(model, device, train_loader, criterion, optimizer, num_epochs=100)
