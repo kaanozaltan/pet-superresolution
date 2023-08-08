@@ -52,15 +52,15 @@ def test_edsr():
     model.load_state_dict(torch.load(f'../models/edsr_pet.pt'))
     model.eval()
 
-    if not os.path.exists('../dataset_pet/inference/outputs'):
-        os.makedirs('../dataset_pet/inference/outputs')
+    if not os.path.exists('../dataset/inference/outputs'):
+        os.makedirs('../dataset/inference/outputs')
 
     # psnr_total = 0.0
     # num_images = 0
 
-    for filename in os.listdir('../dataset_pet/inference/lr'):
-        input_img = Image.open(os.path.join('../dataset_pet/inference/lr', filename).replace('\\', '/'))
-        target_img = Image.open(os.path.join('../dataset_pet/inference/hr', filename).replace('\\', '/'))
+    for filename in os.listdir('../dataset/inference/lr'):
+        input_img = Image.open(os.path.join('../dataset/inference/lr', filename).replace('\\', '/'))
+        target_img = Image.open(os.path.join('../dataset/inference/hr', filename).replace('\\', '/'))
         transform = transforms.ToTensor()
 
         input = transform(input_img).unsqueeze(0)
@@ -74,12 +74,12 @@ def test_edsr():
         output *= 255.0
         output = output.clip(0, 255)
         output = output.transpose(1, 2, 0).astype('uint8').squeeze()
-        print("img range:", np.min(output), np.max(output))##
-        print("output shape", output.shape)##
-        print("output dtype", output.dtype)##
+        #print("img range:", np.min(output), np.max(output))##
+        #print("output shape", output.shape)##
+        #print("output dtype", output.dtype)##
 
         output_img = Image.fromarray(output)
-        output_img.save(os.path.join('../dataset_pet/inference/outputs', filename).replace('\\', '/'))
+        output_img.save(os.path.join('../dataset/inference/outputs', filename).replace('\\', '/'))
 
         # psnr_total += metrics.psnr(output / 255, target / 255)
         # num_images += 1
@@ -93,15 +93,15 @@ def test_srcnn():
     model.load_state_dict(torch.load(f'../models/srcnn_pet.pt'))
     model.eval()
 
-    if not os.path.exists('../dataset_pet/inference/outputs'):
-        os.makedirs('../dataset_pet/inference/outputs')
+    if not os.path.exists('../dataset/inference/outputs'):
+        os.makedirs('../dataset/inference/outputs')
 
     # psnr_total = 0.0
     # num_images = 0
 
-    for filename in os.listdir('../dataset_pet/inference/lr'):
-        input_img = Image.open(os.path.join('../dataset_pet/inference/lr', filename).replace('\\', '/'))
-        target_img = Image.open(os.path.join('../dataset_pet/inference/hr', filename).replace('\\', '/'))
+    for filename in os.listdir('../dataset/inference/lr'):
+        input_img = Image.open(os.path.join('../dataset/inference/lr', filename).replace('\\', '/'))
+        target_img = Image.open(os.path.join('../dataset/inference/hr', filename).replace('\\', '/'))
         transform = transforms.ToTensor()
 
         input = transform(input_img).unsqueeze(0)
@@ -120,7 +120,7 @@ def test_srcnn():
         print("output dtype", output.dtype)##
 
         output_img = Image.fromarray(output)
-        output_img.save(os.path.join('../dataset_pet/inference/outputs', filename).replace('\\', '/'))
+        output_img.save(os.path.join('../dataset/inference/outputs', filename).replace('\\', '/'))
 
         # psnr_total += metrics.psnr(output / 255, target / 255)
         # num_images += 1
@@ -130,5 +130,5 @@ def test_srcnn():
 # test(model=SRCNN())
 # test(model=VDSR())
 # test(model=EDSR())
-# test_edsr()
+#test_edsr()
 test_srcnn()

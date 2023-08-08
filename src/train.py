@@ -40,7 +40,7 @@ def train_edsr():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model, criterion = EDSR(num_channels=1), nn.L1Loss()
     optimizer = optim.Adam(model.parameters(), lr=1e-4)
-    num_epochs = 5
+    num_epochs = 100
     model = model.to(device)
     model.train()
 
@@ -66,9 +66,9 @@ def train_edsr():
 
 def train_srcnn():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model, criterion = SRCNN(num_channels=1), nn.MSELoss()
+    model, criterion = SRCNN(num_channels=1), nn.L1Loss()
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
-    num_epochs = 5
+    num_epochs = 100
     model = model.to(device)
     model.train()
 
@@ -99,8 +99,8 @@ print("Device:", device)
 # train_dataset = SRDataset('../dataset/train/lr', '../dataset/train/hr', transform=transforms.ToTensor())
 # train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
 
-train_dataset = SRDataset('../dataset_pet/train/lr', '../dataset_pet/train/hr', transform=transforms.ToTensor())
-train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True)
+train_dataset = SRDataset('../dataset/train/lr', '../dataset/train/hr', transform=transforms.ToTensor())
+train_loader = DataLoader(train_dataset, batch_size=2, shuffle=True)
 
 # model, criterion = SRCNN(), nn.MSELoss()
 # optimizer = optim.Adam(model.parameters(), lr=1e-3)
@@ -114,5 +114,5 @@ train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True)
 # optimizer = optim.Adam(model.parameters(), lr=1e-4)
 # train(model, device, train_loader, criterion, optimizer, num_epochs=100)
 
-# train_edsr()
+#train_edsr()
 train_srcnn()

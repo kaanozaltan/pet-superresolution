@@ -10,7 +10,7 @@ from PIL import Image
 
 def get_psnr(output, target):
     max_pixel = 1.0
-    mse = torch.mean((output - target) ** 2)
+    mse = torch.mean((output-target)**2)
     if mse == 0:
         return float('inf')
     return 20 * math.log10(max_pixel / torch.sqrt(mse))
@@ -29,40 +29,32 @@ def get_lpips(output, target):
     return loss_fn_vgg(output, target).item()
 
 
-transform = transforms.ToTensor()
-# input_files = os.listdir('../../inputs')
-# output_files = os.listdir('../../outputs')
-# psnr_sum, ssim_sum, lpips_sum = 0, 0, 0
+def calculate_metrics(output_dir, target_dir):
+    transform = transforms.ToTensor()
+    psnr_total = 0.0
+    ssim_total = 0.0
+    lpips_total = 0.0
+    num_images = 0
 
-# for input_file, output_file in zip(input_files, output_files):
-#     input_img = transform(Image.open(input_file))
-#     output_img = transform(Image.open(output_file))
+    for filename in os.listdir(output_dir):
+        output_path = os.path.join(output_dir, filename)
+        target_path = os.path.join(target_dir, filename)
 
-#     psnr_value = get_psnr(output_img, input_img)
-#     ssim_value = get_ssim(output_img, input_img)
-#     lpips_value = get_lpips(output_img, input_img)
+        output = transform(Image.open(output_path))
+        target = transform(Image.open(target_path))
 
-#     psnr_sum += psnr_value
-#     ssim_sum += ssim_value
-#     lpips_sum += lpips_value
+        psnr_total += get_psnr(output, target)
+        ssim_total += get_ssim(output, target)
+        lpips_total += get_lpips(output, target)
+        num_images += 1
 
-#     print(f"Metrics for {output_file}:")
-#     print("PSNR:", psnr_value)
-#     print("SSIM:", ssim_value)
-#     print("LPIPS:", lpips_value)
-#     print()
+    avg_psnr = psnr_total / num_images
+    avg_ssim = ssim_total / num_images
+    avg_lpips = lpips_total / num_images
+    return avg_psnr, avg_ssim, avg_lpips
 
-# print("Average PSNR:", psnr_sum / len(input_files))
-# print("Average SSIM:", ssim_sum / len(input_files))
-# print("Average LPIPS:", lpips_sum / len(input_files))
 
-path1 = '../dataset_pet/inference/hr/ATLATEPP1_ATLA.PT.TEP_IRM_CERVEAU.4.30.2023.04.12.16.31.59.773.69281413.jpg'
-path2 = '../dataset_pet/inference/true_lr/ATLATEPP1_ATLA.PT.TEP_IRM_CERVEAU.4.30.2023.04.12.16.31.59.773.69281413.jpg'
-path3 = '../dataset_pet/inference/outputs/ATLATEPP1_ATLA.PT.TEP_IRM_CERVEAU.4.30.2023.04.12.16.31.59.773.69281413.jpg'
-img1 = transform(Image.open(path1))
-img2 = transform(Image.open(path3))
-print("img range:", torch.min(img1), torch.max(img1))
-print("img shape:", img1.shape)
-print("PSNR:", get_psnr(img1, img2))
-print("SSIM:", get_ssim(img1, img2))
-print("LPIPS:", get_lpips(img1, img2))
+avg_psnr, avg_ssim, avg_lpips = calculate_metrics('E:dataset2/inference/outputs', 'E:/dataset/inference/hr')
+print("Average PSNR:", avg_psnr)
+print("Average SSIM:", avg_ssim)
+print("Average LPIPS:", avg_lpips)
