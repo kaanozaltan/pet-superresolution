@@ -68,26 +68,3 @@ def convert_all(src_path, dst_path):
 
 # resize_all('../dataset/train/lr', '../dataset/train/lr', w, h)
 # resize_all('../dataset/inference/lr', '../dataset/inference/lr', w, h)
-
-# path = 'C:/Users/Kaan/Desktop/ATLATEP_P21/MAC_FDG30min_Sharp/ATLAPTEPP21_AT.PT.TEP_IRM_CERVEAU.4.49.2023.04.06.17.13.12.179.69843961.dcm'
-# dcm = pydicom.dcmread(path)
-# pixel_array = dcm.pixel_array
-# print("shape", pixel_array.shape)
-# normalized_array = (pixel_array - pixel_array.min()) * (256 / (pixel_array.max() - pixel_array.min()))
-# normalized_array = normalized_array.astype(np.uint8)
-# # normalized_array = np.repeat(normalized_array, 3, axis=0)
-# # normalized_array = np.repeat(normalized_array[:, :, np.newaxis], 3, axis=2)
-# print("shape", normalized_array.shape)
-# img = Image.fromarray(normalized_array)
-# img.save('img.jpg')
-
-convert_all('D:/dataset/train/original', 'D:/dataset/train/hr')
-resize_all('D:/dataset/train/hr', 'D:/dataset/train/lr', 48, 48)
-resize_all('D:/dataset/train/lr', 'D:/dataset/train/lr', 384, 384)
-
-convert_all('D:/dataset/inference/original', 'D:/dataset/inference/hr')
-#resize_all('../dataset/inference/hr', '../dataset/inference/lr', 48, 48)
-#resize_all('../dataset/inference/lr', '../dataset/inference/lr', 384, 384)
-
-#read_dcm('D:/siemens/NAMER_TP3/MEVI29839_02-06-2022/PI.1.3.12.2.1107.5.6.1.1592.30110122060811215189200000306')
-#read_dcm('C:/Users/Kaan/Desktop/dcm_test/PI.1.3.12.2.1107.5.6.1.1592.30110122060811215189200000191')

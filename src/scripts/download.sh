@@ -1,6 +1,6 @@
 #!/bin/bash
 
-username="kaan.ozaltan@ug.bilkent.edu.tr"
+username=""
 password=""
 login_url="https://ida.loni.usc.edu/login.jsp"
 download_url="https://downloads.loni.usc.edu/download/files/ida1/75f27461-05ab-4165-8cf4-80730ae2719c/ADNI1:Baseline%203T.zip"

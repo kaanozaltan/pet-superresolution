@@ -19,39 +19,9 @@ class SRCNN(nn.Module):
         return 'srcnn'
 
 
-class VDSR(nn.Module):
-    def __init__(self, num_channels=3, num_filters=64, scaling_factor=0.1, num_convs=18):
-        super(VDSR, self).__init__()
-        self.conv_in = nn.Conv2d(num_channels, num_filters, kernel_size=3, padding=1)
-        self.convs = nn.ModuleList([self._build_conv(num_filters) for _ in range(num_convs)])
-        self.conv_out = nn.Conv2d(num_filters, num_channels, kernel_size=3, padding=1)
-        self.scaling_factor = scaling_factor
-
-    def _build_conv(self, num_filters):
-        return nn.Sequential(
-            nn.Conv2d(num_filters, num_filters, kernel_size=3, padding=1),
-            nn.ReLU(),
-            # nn.BatchNorm2d(num_filters)
-        )
-
-    def forward(self, x):
-        # x_in = x
-        x = self.conv_in(x)
-
-        for block in self.convs:
-            x = block(x)
-
-        # x = self.conv_out(residual + x_in)
-        x = self.conv_out(x)
-        return x
-    
-    def get_name(self):
-        return 'vdsr'
-
-
-class EDSR(nn.Module):
+class DeepSR(nn.Module):
     def __init__(self, num_channels=3, num_filters=64, scaling_factor=0.1, num_residuals=20):
-        super(EDSR, self).__init__()
+        super(DeepSR, self).__init__()
         self.conv_in = nn.Conv2d(num_channels, num_filters, kernel_size=3, padding=1)
         self.residuals = nn.ModuleList([self._build_residual(num_filters) for _ in range(num_residuals)])
         self.conv_out = nn.Conv2d(num_filters, num_channels, kernel_size=3, padding=1)
@@ -77,4 +47,4 @@ class EDSR(nn.Module):
         return x
     
     def get_name(self):
-        return 'edsr'
+        return 'deepsr'

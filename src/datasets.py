@@ -25,17 +25,3 @@ class SRDataset(Dataset):
             hr_img = self.transform(hr_img)
 
         return lr_img, hr_img
-
-
-class DCMDataset(Dataset):
-    def __init__(self, dcm_dir, transform=None):
-        self.dcm_dir = dcm_dir
-        self.transform = transform
-
-        self.pet_filenames = [filename for filename in os.listdir(dcm_dir)]
-
-    def __len__(self):
-        return len(self.pet_filenames)
-    
-    def __getitem__(self, idx):
-        pass
