@@ -19,11 +19,8 @@ def generate_outputs(model):
 
     for filename in os.listdir('../dataset/inference/lr'):
         input_img = Image.open(os.path.join('../dataset/inference/lr', filename).replace('\\', '/'))
-        target_img = Image.open(os.path.join('../dataset/inference/hr', filename).replace('\\', '/'))
         transform = transforms.ToTensor()
-
         input = transform(input_img).unsqueeze(0)
-        target = np.array(target_img)
 
         with torch.no_grad():
             output = model(input)

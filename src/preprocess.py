@@ -58,13 +58,14 @@ def convert_all(src_path, dst_path):
             img.save(os.path.join(dst_path, output_filename).replace('\\', '/'))    
 
 
-# w, h = 256, 256
+w_hr, h_hr = 384, 384
+w_lr, h_lr = 48, 48
 
-# resize_all('../dataset/train/original', '../dataset/train/hr', w, h)
-# resize_all('../dataset/inference/original', '../dataset/inference/hr', w, h)
+resize_all('../dataset/train/original', '../dataset/train/hr', w_hr, h_hr)
+resize_all('../dataset/inference/original', '../dataset/inference/hr', w_hr, h_hr)
 
-# resize_all('../dataset/train/original', '../dataset/train/lr', 32, 32)
-# resize_all('../dataset/inference/original', '../dataset/inference/lr', 32, 32)
+resize_all('../dataset/train/original', '../dataset/train/lr', w_lr, h_lr)
+resize_all('../dataset/inference/original', '../dataset/inference/lr', w_lr, h_lr)
 
-# resize_all('../dataset/train/lr', '../dataset/train/lr', w, h)
-# resize_all('../dataset/inference/lr', '../dataset/inference/lr', w, h)
+resize_all('../dataset/train/lr', '../dataset/train/lr', w_hr, h_hr)
+resize_all('../dataset/inference/lr', '../dataset/inference/lr', w_hr, h_hr)
