@@ -5,7 +5,7 @@ import pydicom
 import numpy as np
 
 
-def resize_all(src_path, dst_path, new_width, new_height, resample=Image.NEAREST):
+def resize_all(src_path, dst_path, new_width, new_height, resample=Image.BICUBIC):
     if not os.path.exists(dst_path):
         os.makedirs(dst_path)
 

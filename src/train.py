@@ -1,3 +1,5 @@
+import os
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -29,6 +31,9 @@ def train(model, device, train_loader, criterion, optimizer, num_epochs):
 
         epoch_loss = running_loss / len(train_dataset)
         print('Epoch [{}/{}], Loss: {:.4f}'.format(epoch+1, num_epochs, epoch_loss))
+
+    if not os.path.exists('../models'):
+        os.makedirs('../models')
 
     torch.save(model.state_dict(), f'../models/{model_name}.pt')
 

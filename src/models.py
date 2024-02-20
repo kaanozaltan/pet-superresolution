@@ -2,7 +2,7 @@ import torch.nn as nn
 
 
 class SRCNN(nn.Module):
-    def __init__(self, num_channels=3):
+    def __init__(self, num_channels=1):
         super(SRCNN, self).__init__()
         self.conv1 = nn.Conv2d(num_channels, 64, kernel_size=9, padding=4)
         self.conv2 = nn.Conv2d(64, 32, kernel_size=1, padding=0)
@@ -20,7 +20,7 @@ class SRCNN(nn.Module):
 
 
 class DeepSR(nn.Module):
-    def __init__(self, num_channels=3, num_filters=64, scaling_factor=0.1, num_residuals=20):
+    def __init__(self, num_channels=1, num_filters=64, scaling_factor=0.1, num_residuals=20):
         super(DeepSR, self).__init__()
         self.conv_in = nn.Conv2d(num_channels, num_filters, kernel_size=3, padding=1)
         self.residuals = nn.ModuleList([self._build_residual(num_filters) for _ in range(num_residuals)])
