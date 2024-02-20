@@ -11,10 +11,10 @@ def resize_all(src_path, dst_path, new_width, new_height, resample=Image.BICUBIC
 
     for filename in os.listdir(src_path):
         if filename.endswith('.jpg') or filename.endswith('.jpeg') or filename.endswith('.png'):
-            img_path = os.path.join(src_path, filename).replace('\\', '/')
+            img_path = os.path.join(src_path, filename)
             img = Image.open(img_path)
             resized_img = img.resize((new_width, new_height), resample=resample)
-            resized_img.save(os.path.join(dst_path, filename).replace('\\', '/'))
+            resized_img.save(os.path.join(dst_path, filename))
 
 
 def print_metadata(file_path):
@@ -49,13 +49,13 @@ def convert_all(src_path, dst_path):
     for filename in os.listdir(src_path):
         if filename.endswith('.dcm'):
             output_filename = os.path.splitext(filename)[0] + '.png'
-            dcm_path = os.path.join(src_path, filename).replace('\\', '/')
+            dcm_path = os.path.join(src_path, filename)
             dcm = pydicom.dcmread(dcm_path)
             pixel_array = dcm.pixel_array
             pixel_array = (pixel_array - pixel_array.min()) * (256 / (pixel_array.max() - pixel_array.min()))
             pixel_array = pixel_array.astype(np.uint8)
             img = Image.fromarray(pixel_array)
-            img.save(os.path.join(dst_path, output_filename).replace('\\', '/'))
+            img.save(os.path.join(dst_path, output_filename))
 
 
 convert_all('../dataset_dcm/train', '../dataset/train/hr')

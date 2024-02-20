@@ -18,7 +18,7 @@ def generate_outputs(model):
         os.makedirs('../dataset/inference/outputs')
 
     for filename in os.listdir('../dataset/inference/lr'):
-        input_img = Image.open(os.path.join('../dataset/inference/lr', filename).replace('\\', '/'))
+        input_img = Image.open(os.path.join('../dataset/inference/lr', filename))
         transform = transforms.ToTensor()
         input = transform(input_img).unsqueeze(0)
 
@@ -31,7 +31,7 @@ def generate_outputs(model):
         output = output.transpose(1, 2, 0).astype('uint8')
 
         output_img = Image.fromarray(output, mode='RGB')
-        output_img.save(os.path.join('../dataset/inference/outputs', filename).replace('\\', '/'))
+        output_img.save(os.path.join('../dataset/inference/outputs', filename))
 
 
 generate_outputs(model=SRCNN())

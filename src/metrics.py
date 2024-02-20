@@ -54,7 +54,7 @@ def calculate_metrics(output_dir, target_dir):
     return avg_psnr, avg_ssim, avg_lpips
 
 
-avg_psnr, avg_ssim, avg_lpips = calculate_metrics('E:/dataset/inference/outputs', 'E:/dataset/inference/hr')
+avg_psnr, avg_ssim, avg_lpips = calculate_metrics('../dataset/inference/outputs', '../dataset/inference/hr')
 print("Average PSNR:", avg_psnr)
 print("Average SSIM:", avg_ssim)
 print("Average LPIPS:", avg_lpips)

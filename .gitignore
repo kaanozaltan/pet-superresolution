@@ -1,6 +1,6 @@
-**/.DS_Store
 __pycache__/
 pet_sr_env/
 dataset/
 dataset_dcm/
 dataset_patients/
+.DS_Store
