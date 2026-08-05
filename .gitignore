@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+dataset/
+dataset_dcm/
+dataset_patients/
+models/
+.DS_Store/
